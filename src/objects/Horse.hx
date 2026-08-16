@@ -18,31 +18,33 @@ class Horse extends FlxSprite
 	}
 
 	var speed:Float = 100;
-	// well its a way to stop phasing through blue walls but clearly it sucks at doing that
-	var previousX:Float;
-	var previousY:Float;
 	var wasColliding:Bool = false;
 
 	override function update(dt:Float)
 	{
-    	previousX = x;
-    	previousY = y;
+    	var moveX:Float = velocity.x * dt;
+    	var moveY:Float = velocity.y * dt;
 
-    	super.update(dt);
+		// okay now its better
+    	var steps = Math.ceil(Math.max(Math.abs(moveX), Math.abs(moveY)) / 2);
 
-    	var collision = FlxCollision.pixelPerfectCheck(this, Map.instance.mapSpr);
-
-    	if (collision && !wasColliding)
+    	for (i in 0...steps)
     	{
-        	x = previousX;
-        	y = previousY;
+        	x += moveX / steps;
+        	y += moveY / steps;
 
-			FlxG.sound.play(Paths.sound('hit'));
+        	if (FlxCollision.pixelPerfectCheck(this, Map.instance.mapSpr))
+        	{
+            	x -= moveX / steps;
+            	y -= moveY / steps;
 
-        	randomDirection();
+            	randomDirection();
+
+            	FlxG.sound.play(Paths.sound('hit'));
+        	}
     	}
 
-    	wasColliding = collision;
+    	super.update(0);
 	}
 
 	function randomDirection()
