@@ -1,5 +1,6 @@
-package;
+package states;
 
+import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import objects.Horse;
@@ -18,14 +19,16 @@ class PlayState extends FlxState
 		map = new Map(0, {startingPoint: [25, 25], carrotPoint: [200, 200]});
 		add(map);
 
-		horses = new FlxTypedGroup<Horse>(1);
+		horses = new FlxTypedGroup<Horse>(2);
 		add(horses);
 
 		for (i in 0...horses.maxSize)
 		{
-			var horse = new Horse(map.startingPoint[0] + (i * 32), map.startingPoint[1] + (i * 32), i);
+			var horse = new Horse(map.startingPoint[0] + (i * 32), map.startingPoint[1], i);
 			horses.add(horse);
 		}
+
+		FlxG.sound.playMusic(Paths.music('mus-1'));
 	}
 
 	override public function update(elapsed:Float)
