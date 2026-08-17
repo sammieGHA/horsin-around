@@ -28,7 +28,7 @@ class WinSub extends FlxSubState
 		FlxG.cameras.add(subCamera, false);
 
 		var winText = new FlxText(0, FlxG.height / 2 - 20, FlxG.width, 'Replac later but horse ${winningHorse.horseID} won');
-		winText.setFormat(null, 32, 0xFFFFFFFF, CENTER);
+		winText.setFormat(Paths.data('terminal.ttf'), 32, 0xFFFFFFFF, CENTER);
 		winText.camera = subCamera;
 		add(winText);
 

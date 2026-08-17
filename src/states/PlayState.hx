@@ -1,11 +1,14 @@
 package states;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import objects.Horse;
 import objects.Map;
 
@@ -19,6 +22,11 @@ class PlayState extends FlxState
 	var mapID:Int;
 
 	var roundEnded:Bool = false;
+	var hudCamera:FlxCamera;
+
+	var info:FlxText;
+	var infoBG:FlxSprite;
+	var time:Float = 0;
 
 	function new(mapID:Int = 0)
 	{
@@ -30,6 +38,10 @@ class PlayState extends FlxState
 	override function create()
 	{
 		super.create();
+
+		hudCamera = new FlxCamera();
+		hudCamera.bgColor = FlxColor.TRANSPARENT;
+		FlxG.cameras.add(hudCamera, false);
 
 		map = new Map(mapID);
 		add(map);
@@ -54,6 +66,18 @@ class PlayState extends FlxState
 
 		FlxG.sound.playMusic(Paths.music('mus-${FlxG.random.int(1, 1)}'));
 		FlxG.camera.setScrollBounds(0, FlxG.width, 0, map.isExtended ? FlxG.height * 2 : FlxG.height);
+
+		infoBG = new FlxSprite().makeGraphic(1, 1, 0x99000000);
+		infoBG.camera = hudCamera;
+		add(infoBG);
+
+		info = new FlxText(0, 6, 0, 'Test');
+		info.setFormat(Paths.data('terminal.ttf'), 32);
+		info.alignment = CENTER;
+		info.camera = hudCamera;
+		info.scale.set(.5, .5);
+		info.updateHitbox();
+		add(info);
 	}
 
 	override function update(elapsed:Float)
@@ -61,6 +85,23 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		if (roundEnded)
 			return;
+
+		time += elapsed;
+		info.text = 'm:$mapID | t:${Std.int(time)}';
+		info.screenCenter(X);
+
+		var py = 6;
+
+		var tw = info.width * info.scale.x;
+		var th = info.height * info.scale.y;
+
+		infoBG.setGraphicSize(Std.int(tw + 12 * 2), Std.int(th + py * 2));
+		infoBG.updateHitbox();
+
+		infoBG.y = info.y - py;
+		infoBG.screenCenter(X);
+
+		// fix ts later idk what i was doing ^^
 
 		if (map.isExtended)
 		{
