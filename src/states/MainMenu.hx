@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.tweens.FlxEase;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 
@@ -28,7 +29,7 @@ class MainMenu extends FlxState
 		// replace for button or som shit && make it go to MapSelect
 		if (FlxG.keys.justPressed.SPACE)
 		{
-			FlxG.switchState(() -> new states.PlayState(5));
+			FlxG.switchState(() -> new states.MapSelect());
 		}
 
 		super.update(dt);
