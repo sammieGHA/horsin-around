@@ -31,7 +31,7 @@ class Map extends FlxGroup
 
 	var startingPoint:Array<Int>;
 	var carrotPoint:Array<Int>;
-	var isExtended:Bool = false;
+	var isExtended:Bool;
 
 	var mapID:Int;
 
