@@ -29,7 +29,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		map = new Map(mapID); // replace 0 for an int passed from a starting state
+		map = new Map(mapID);
 		add(map);
 
 		carrot = new FlxSprite(map.carrotPoint[0], map.carrotPoint[1]).loadGraphic(Paths.image('carrot'));
@@ -69,12 +69,16 @@ class PlayState extends FlxState
 			{
 				selectedHorse = daClickedHorse;
 				FlxG.camera.follow(daClickedHorse, LOCKON);
+
+				FlxTween.cancelTweensOf(FlxG.camera);
 				FlxTween.tween(FlxG.camera, {zoom: 1.5}, 0.4, {ease: FlxEase.quadInOut});
 			}
 			else
 			{
 				selectedHorse = null;
 				FlxG.camera.follow(null);
+
+				FlxTween.cancelTweensOf(FlxG.camera);
 				FlxTween.tween(FlxG.camera, {zoom: 1}, 0.4, {ease: FlxEase.quadInOut});
 			}
 		}
