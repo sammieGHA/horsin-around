@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.util.FlxGradient;
+import shaders.GradientShader;
 import openfl.Assets;
 
 typedef MapData =
@@ -37,7 +38,7 @@ class Map extends FlxGroup
 		{
 			startingPoint: [75, 40],
 			carrotPoint: [490, 420],
-			gradient: [0xFF4e4e4e, 0xFF292929]
+			gradient: [0xff3350d4, 0xFF190971]
 		}
 	];
 
@@ -72,6 +73,7 @@ class Map extends FlxGroup
 
 		background = FlxGradient.createGradientFlxSprite(FlxG.width, FlxG.height, mapList[map].gradient);
 		mapSpr = new FlxSprite().loadGraphic(Paths.image('map-$map'));
+		mapSpr.shader = new GradientShader(mapList[map].gradient);
 		add(background);
 		add(mapSpr);
 	}
