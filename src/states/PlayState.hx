@@ -35,12 +35,18 @@ class PlayState extends FlxState
 		carrot = new FlxSprite(map.carrotPoint[0], map.carrotPoint[1]).loadGraphic(Paths.image('carrot'));
 		add(carrot);
 
-		horses = new FlxTypedGroup<Horse>(2);
+		horses = new FlxTypedGroup<Horse>(8);
 		add(horses);
 
 		for (i in 0...horses.maxSize)
 		{
-			var horse = new Horse(map.startingPoint[0] + (i * 32), map.startingPoint[1], i);
+			var col = i % 4;
+			var row = Math.floor(i / 4);
+
+			var horseX = map.startingPoint[0] + (col * 32);
+			var horseY = map.startingPoint[1] + (row * 32);
+
+			var horse = new Horse(horseX, horseY, i);
 			horses.add(horse);
 		}
 

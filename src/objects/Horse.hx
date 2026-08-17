@@ -40,7 +40,8 @@ class Horse extends FlxSprite
 
 				randomDirection();
 
-				FlxG.sound.play(Paths.sound('hit'));
+				var s = FlxG.sound.play(Paths.sound('hit'), .7);
+				s.pitch = FlxG.random.float(.8, 1.2);
 			}
 		}
 
