@@ -4,8 +4,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.util.FlxGradient;
-import shaders.GradientShader;
 import openfl.Assets;
+import shaders.GradientShader;
 
 typedef MapData =
 {
@@ -37,7 +37,7 @@ class Map extends FlxGroup
 		},
 		{
 			startingPoint: [75, 40],
-			carrotPoint: [490, 420],
+			carrotPoint: [40, 242],
 			gradient: [0xff3350d4, 0xFF190971]
 		}
 	];
