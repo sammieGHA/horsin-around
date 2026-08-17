@@ -11,6 +11,7 @@ typedef MapData =
 	var startingPoint:Array<Int>;
 	var carrotPoint:Array<Int>;
 	var gradient:Array<Int>;
+	var ?isExtended:Bool; // for 640x960 map
 }
 
 @:publicFields
@@ -30,6 +31,9 @@ class Map extends FlxGroup
 
 	var startingPoint:Array<Int>;
 	var carrotPoint:Array<Int>;
+	var isExtended:Bool = false;
+
+	var mapID:Int;
 
 	function new(map:Int)
 	{
@@ -41,9 +45,12 @@ class Map extends FlxGroup
 		if (map < 0 || map >= mapList.length)
 			return;
 
+		mapID = map;
+
 		var data = mapList[map];
 		this.startingPoint = data.startingPoint;
 		this.carrotPoint = data.carrotPoint;
+		this.isExtended = data.isExtended == true;
 
 		if (!Assets.exists(Paths.image('map-$map')))
 			return;

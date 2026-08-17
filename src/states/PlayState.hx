@@ -45,7 +45,7 @@ class PlayState extends FlxState
 		}
 
 		FlxG.sound.playMusic(Paths.music('mus-${FlxG.random.int(1, 1)}'));
-		FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
+		FlxG.camera.setScrollBounds(0, FlxG.width, 0, map.isExtended ? FlxG.height * 2 : FlxG.height);
 	}
 
 	override function update(elapsed:Float)
