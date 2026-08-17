@@ -33,12 +33,18 @@ class Map extends FlxGroup
 		{
 			startingPoint: [75, 40],
 			carrotPoint: [490, 420],
-			gradient: [0xFFbe0000, 0xFF7d142f]
+			gradient: [0xFF810023, 0xFF40142f]
 		},
 		{
 			startingPoint: [75, 40],
 			carrotPoint: [40, 242],
 			gradient: [0xff3350d4, 0xFF190971]
+		},
+		{
+			startingPoint: [10, 40],
+			carrotPoint: [40, 242],
+			gradient: [0xff3350d4, 0xFF190971],
+			isExtended: true
 		}
 	];
 

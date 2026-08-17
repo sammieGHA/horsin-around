@@ -25,7 +25,7 @@ class MainMenu extends FlxState
 		// replace for button or som shit && make it go to MapSelect
 		if (FlxG.keys.justPressed.SPACE)
 		{
-			FlxG.switchState(() -> new states.PlayState(2));
+			FlxG.switchState(() -> new states.PlayState(4));
 		}
 
 		super.update(dt);

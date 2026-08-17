@@ -58,6 +58,21 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
+		if (map.isExtended)
+		{
+			if (FlxG.keys.anyPressed([W, UP]))
+				FlxG.camera.scroll.y -= 300 * elapsed;
+			if (FlxG.keys.anyPressed([S, DOWN]))
+				FlxG.camera.scroll.y += 300 * elapsed;
+		}
+
+		#if debug
+		if (FlxG.keys.justPressed.E)
+			FlxG.camera.zoom -= .5;
+		if (FlxG.keys.justPressed.Q)
+			FlxG.camera.zoom += .5;
+		#end
+
 		if (FlxG.mouse.justPressed)
 		{
 			var daClickedHorse:Horse = null;
