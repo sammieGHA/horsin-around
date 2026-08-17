@@ -1,26 +1,39 @@
 package states;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import objects.Horse;
-import objects.Map.MapData;
 import objects.Map;
 
+@:publicFields
 class PlayState extends FlxState
 {
 	var selectedHorse:Horse;
+	var carrot:FlxSprite;
 	var horses:FlxTypedGroup<Horse>;
 	var map:Map;
+	var mapID:Int;
 
-	override public function create()
+	function new(mapID:Int = 0)
+	{
+		super();
+
+		this.mapID = mapID;
+	}
+
+	override function create()
 	{
 		super.create();
 
-		map = new Map(0, {startingPoint: [25, 25], carrotPoint: [200, 200]});
+		map = new Map(mapID); // replace 0 for an int passed from a starting state
 		add(map);
+
+		carrot = new FlxSprite(map.carrotPoint[0], map.carrotPoint[1]).loadGraphic(Paths.image('carrot'));
+		add(carrot);
 
 		horses = new FlxTypedGroup<Horse>(2);
 		add(horses);
@@ -31,11 +44,11 @@ class PlayState extends FlxState
 			horses.add(horse);
 		}
 
-		FlxG.sound.playMusic(Paths.music('mus-1'));
+		FlxG.sound.playMusic(Paths.music('mus-${FlxG.random.int(1, 1)}'));
 		FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 	}
 
-	override public function update(elapsed:Float)
+	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
