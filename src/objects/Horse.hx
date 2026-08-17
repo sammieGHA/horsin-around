@@ -10,12 +10,14 @@ class Horse extends FlxSprite
 {
 	var speed:Float = 100;
 	var horses:FlxTypedGroup<Horse>;
+	var horseID:Int;
 
 	function new(x:Float, y:Float, horseID:Int, horses:FlxTypedGroup<Horse>)
 	{
 		super(x, y);
 
 		this.horses = horses;
+		this.horseID = horseID;
 
 		loadGraphic(Paths.image('horses/horse-$horseID'));
 

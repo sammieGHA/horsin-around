@@ -18,6 +18,8 @@ class PlayState extends FlxState
 	var map:Map;
 	var mapID:Int;
 
+	var roundEnded:Bool = false;
+
 	function new(mapID:Int = 0)
 	{
 		super();
@@ -57,6 +59,8 @@ class PlayState extends FlxState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		if (roundEnded)
+			return;
 
 		if (map.isExtended)
 		{
@@ -72,6 +76,8 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.Q)
 			FlxG.camera.zoom += .5;
 		#end
+
+		FlxG.overlap(horses, carrot, win);
 
 		if (FlxG.mouse.justPressed)
 		{
@@ -103,5 +109,31 @@ class PlayState extends FlxState
 				FlxTween.tween(FlxG.camera, {zoom: 1}, 0.4, {ease: FlxEase.quadInOut});
 			}
 		}
+	}
+
+	function win(horse:Horse, __carrot:FlxSprite)
+	{
+		if (roundEnded)
+			return;
+
+		roundEnded = true;
+		selectedHorse = horse;
+
+		horses.active = false;
+
+		FlxG.sound.music.stop();
+		FlxG.sound.play(Paths.sound('win'));
+
+		FlxG.camera.follow(horse, LOCKON);
+		FlxTween.cancelTweensOf(FlxG.camera);
+
+		FlxTween.tween(FlxG.camera, {zoom: 3}, 3, {
+			ease: FlxEase.quadInOut,
+			onComplete: function(_)
+			{
+				// open substate but do that later
+				openSubState(new states.sub.WinSub(horse));
+			}
+		});
 	}
 }

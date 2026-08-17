@@ -14,6 +14,9 @@ class MainMenu extends FlxState
 		super.create();
 
 		FlxG.mouse.load(Paths.image('cursor'));
+		#if debug
+		FlxG.switchState(() -> new states.PlayState(1));
+		#end
 
 		// make it better
 		var bg = FlxGradient.createGradientFlxSprite(FlxG.width, FlxG.height, [FlxColor.BLACK, FlxColor.GRAY], 1, 45, true);
@@ -25,7 +28,7 @@ class MainMenu extends FlxState
 		// replace for button or som shit && make it go to MapSelect
 		if (FlxG.keys.justPressed.SPACE)
 		{
-			FlxG.switchState(() -> new states.PlayState(4));
+			FlxG.switchState(() -> new states.PlayState(5));
 		}
 
 		super.update(dt);
