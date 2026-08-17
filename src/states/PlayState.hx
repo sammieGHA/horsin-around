@@ -46,7 +46,7 @@ class PlayState extends FlxState
 			var horseX = map.startingPoint[0] + (col * 32);
 			var horseY = map.startingPoint[1] + (row * 32);
 
-			var horse = new Horse(horseX, horseY, i);
+			var horse = new Horse(horseX, horseY, i, horses);
 			horses.add(horse);
 		}
 
