@@ -65,7 +65,7 @@ class PlayState extends FlxState
 			horses.add(horse);
 		}
 
-		FlxG.sound.playMusic(Paths.music('mus-${FlxG.random.int(1, 1)}'));
+		FlxG.sound.playMusic(Paths.music('mus-${FlxG.random.int(1, 2)}'));
 		FlxG.camera.setScrollBounds(0, FlxG.width, 0, map.isExtended ? FlxG.height * 2 : FlxG.height);
 
 		infoBG = new FlxSprite().makeGraphic(1, 1, 0x99000000);
@@ -186,7 +186,7 @@ class PlayState extends FlxState
 		horses.active = false;
 
 		FlxG.sound.music.stop();
-		FlxG.sound.play(Paths.sound('win'));
+		FlxG.sound.play(Paths.sound('horse'));
 
 		FlxG.camera.follow(horse, LOCKON);
 		FlxTween.cancelTweensOf(FlxG.camera);

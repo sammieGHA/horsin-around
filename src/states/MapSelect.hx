@@ -19,6 +19,9 @@ class MapSelect extends FlxState
 	{
 		super.create();
 
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.stop();
+
 		buttons = new FlxTypedGroup<Button>();
 		add(buttons);
 
