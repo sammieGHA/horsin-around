@@ -42,7 +42,7 @@ class Map extends FlxGroup
 		},
 		{ // 4
 			startingPoint: [10, 40],
-			carrotPoint: [40, 242],
+			carrotPoint: [545, 850],
 			gradient: [0xFFb03e6b, 0xFF4a1a33],
 			isExtended: true
 		},
@@ -97,7 +97,7 @@ class Map extends FlxGroup
 		if (!Assets.exists(Paths.image('map-$map')))
 			return;
 
-		background = FlxGradient.createGradientFlxSprite(FlxG.width, FlxG.height, mapList[map].gradient);
+		background = FlxGradient.createGradientFlxSprite(FlxG.width, mapList[map].isExtended ? FlxG.height * 2 : FlxG.height, mapList[map].gradient);
 		mapSpr = new FlxSprite().loadGraphic(Paths.image('map-$map'));
 		mapSpr.shader = new GradientShader(mapList[map].gradient);
 		add(background);

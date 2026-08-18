@@ -16,7 +16,7 @@ class MainMenu extends FlxState
 
 		FlxG.mouse.load(Paths.image('cursor'));
 		#if debug
-		FlxG.switchState(() -> new states.PlayState(1));
+		FlxG.switchState(() -> new states.PlayState(4));
 		#end
 
 		// make it better
