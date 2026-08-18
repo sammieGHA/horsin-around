@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import objects.Map;
@@ -61,7 +62,7 @@ class MapSelect extends FlxState
 			var targetX = centerX + (i - selectIndex) * spacing - btn.width / 2;
 
 			var isSelected = (i == selectIndex);
-			var targetScale = isSelected ? .2 : 0.05;
+			var targetScale = isSelected ? .5 : 0.25;
 			var targetAlpha = isSelected ? 1 : 0.5;
 
 			if (tween)
@@ -81,15 +82,28 @@ class MapSelect extends FlxState
 }
 
 @:publicFields
-class Button extends FlxSprite
+class Button extends FlxSpriteGroup
 {
 	var mapID:Int;
+	var buttonBg:FlxSprite;
+	var mapThumb:FlxSprite;
 
 	function new(x:Float, y:Float, id:Int)
 	{
 		super(x, y);
 
 		mapID = id;
-		loadGraphic(Paths.image('map-$id'));
+
+		buttonBg = new FlxSprite().loadGraphic(Paths.image('button'));
+		add(buttonBg);
+
+		mapThumb = new FlxSprite().loadGraphic(Paths.image('map-$id'));
+
+		mapThumb.setGraphicSize(25, 25); // AAAAAAAAAAAAAAAAH
+		mapThumb.updateHitbox();
+
+		mapThumb.x = (buttonBg.width - mapThumb.width) / 2;
+		mapThumb.y = (buttonBg.height - mapThumb.height) / 2;
+		add(mapThumb);
 	}
 }
