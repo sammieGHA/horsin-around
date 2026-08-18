@@ -27,6 +27,7 @@ class PlayState extends FlxState
 	var info:FlxText;
 	var infoBG:FlxSprite;
 	var time:Float = 0;
+	var canPause:Bool = true;
 
 	function new(mapID:Int = 0)
 	{
@@ -78,6 +79,22 @@ class PlayState extends FlxState
 		info.scale.set(.5, .5);
 		info.updateHitbox();
 		add(info);
+
+		if (map.isExtended)
+		{
+			var WSInfo:FlxSprite = new FlxSprite(FlxG.width - 80, 10, Paths.image('instructions'));
+			WSInfo.camera = hudCamera;
+			add(WSInfo);
+
+			FlxTween.tween(WSInfo, {alpha: 0}, .5, {
+				ease: FlxEase.quadOut,
+				startDelay: 4,
+				onComplete: function(t:FlxTween)
+				{
+					WSInfo.destroy();
+				}
+			});
+		}
 	}
 
 	override function update(elapsed:Float)
@@ -85,6 +102,11 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		if (roundEnded)
 			return;
+
+		if (canPause && FlxG.keys.justPressed.ESCAPE)
+		{
+			openSubState(new states.sub.PauseSub());
+		}
 
 		time += elapsed;
 		info.text = 'm:$mapID | t:${Std.int(time)}';
@@ -158,6 +180,7 @@ class PlayState extends FlxState
 			return;
 
 		roundEnded = true;
+		canPause = false;
 		selectedHorse = horse;
 
 		horses.active = false;
