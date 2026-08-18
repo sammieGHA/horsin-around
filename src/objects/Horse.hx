@@ -11,6 +11,7 @@ class Horse extends FlxSprite
 	var speed:Float = 100;
 	var horses:FlxTypedGroup<Horse>;
 	var horseID:Int;
+	var initialized:Bool = false;
 
 	function new(x:Float, y:Float, horseID:Int, horses:FlxTypedGroup<Horse>)
 	{
@@ -23,15 +24,23 @@ class Horse extends FlxSprite
 
 		velocity.x = 50;
 		velocity.y = 50;
+
+		initialized = true;
 	}
 
 	override function update(dt:Float)
 	{
+		if (!initialized || graphic == null || scale == null)
+			return;
+
 		var moveX:Float = velocity.x * dt;
 		var moveY:Float = velocity.y * dt;
 
 		// okay now its better
 		var steps:Int = Math.ceil(Math.max(Math.abs(moveX), Math.abs(moveY)) / 2);
+
+		if (steps < 1)
+			steps = 1;
 
 		for (i in 0...steps)
 		{
@@ -41,28 +50,38 @@ class Horse extends FlxSprite
 			x += stepX;
 			y += stepY;
 
-			if (FlxCollision.pixelPerfectCheck(this, Map.instance.mapSpr))
+			var mapSpr = Map.instance != null ? Map.instance.mapSpr : null;
+
+			if (mapSpr != null && mapSpr.graphic != null && mapSpr.scale != null)
 			{
-				x -= stepX;
-				y -= stepY;
-
-				randomDirection();
-
-				var s = FlxG.sound.play(Paths.sound('hit'), .7);
-				s.pitch = FlxG.random.float(0.8, 1.2);
-			}
-
-			for (horse in horses.members)
-			{
-				if (horse == null || horse == this)
-					continue;
-
-				if (overlaps(horse))
+				if (FlxCollision.pixelPerfectCheck(this, mapSpr))
 				{
 					x -= stepX;
 					y -= stepY;
 
 					randomDirection();
+
+					var sound = FlxG.sound.play(Paths.sound('hit'), .7);
+
+					if (sound != null)
+						sound.pitch = FlxG.random.float(0.8, 1.2);
+				}
+			}
+
+			if (horses != null)
+			{
+				for (horse in horses.members)
+				{
+					if (horse == null || horse == this || !horse.initialized)
+						continue;
+
+					if (overlaps(horse))
+					{
+						x -= stepX;
+						y -= stepY;
+
+						randomDirection();
+					}
 				}
 			}
 		}
@@ -84,6 +103,13 @@ class Horse extends FlxSprite
 		}
 
 		var length = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+
+		if (length <= 0)
+		{
+			velocity.x = speed;
+			velocity.y = 0;
+			return;
+		}
 
 		velocity.x = velocity.x / length * speed;
 		velocity.y = velocity.y / length * speed;
