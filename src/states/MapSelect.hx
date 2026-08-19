@@ -51,8 +51,11 @@ class MapSelect extends FlxState
 			updatePositions(true);
 		}
 
+		// if (FlxG.keys.anyJustPressed([SPACE, ENTER]))
+		// 	FlxG.switchState(() -> new states.PlayState(selectIndex));
+
 		if (FlxG.keys.anyJustPressed([SPACE, ENTER]))
-			FlxG.switchState(() -> new states.PlayState(selectIndex));
+			openSubState(new states.sub.BettingSub());
 	}
 
 	function updatePositions(tween:Bool)
