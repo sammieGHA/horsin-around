@@ -28,9 +28,9 @@ class WinSub extends FlxSubState
 		subCamera.bgColor = 0x99000000;
 		FlxG.cameras.add(subCamera, false);
 
-		FlxG.sound.play(Paths.sound('win'));
+		FlxG.sound.play(Paths.sound('win theme'));
 
-		var winText = new FlxText(0, FlxG.height / 2 - 20, FlxG.width, 'Replac later but horse ${winningHorse.horseID} won');
+		var winText = new FlxText(0, FlxG.height / 2 - 20, FlxG.width, 'Replac later but horse ${winningHorse.horseID} won\n(you wod get your money *2)');
 		winText.setFormat(Paths.data('terminal.ttf'), 32, 0xFFFFFFFF, CENTER);
 		winText.camera = subCamera;
 		add(winText);
