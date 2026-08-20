@@ -55,7 +55,7 @@ class MapSelect extends FlxState
 		// 	FlxG.switchState(() -> new states.PlayState(selectIndex));
 
 		if (FlxG.keys.anyJustPressed([SPACE, ENTER]))
-			openSubState(new states.sub.BettingSub());
+			openSubState(new states.sub.BettingSub(selectIndex));
 	}
 
 	function updatePositions(tween:Bool)
